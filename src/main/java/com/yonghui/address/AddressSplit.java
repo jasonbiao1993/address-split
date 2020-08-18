@@ -26,7 +26,7 @@ public interface AddressSplit {
      * @param segTokens 拆分后的词列表
      * @return 弄、巷 -> 号 -> 号院 ->  栋、幢、号楼、座 -> 单元等信息
      */
-    List<String> extract(List<SegToken> segTokens);
+    List<SegToken> extract(List<SegToken> segTokens);
 
 
     /**

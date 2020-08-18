@@ -2,6 +2,7 @@ package com.yonghui.address.rule.interceptor;
 
 
 import com.yonghui.address.AddressContext;
+import com.yonghui.jieba.SegToken;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ import java.util.List;
 public class AddressUnitFilterInterceptor implements AfterExtractInterceptor {
     @Override
     public void afterExtract(AddressContext addressContext) {
-        List<String> firstUnits = addressContext.getFirstUnits();
-        List<String> secondUnits = addressContext.getSecondUnits();
+        List<SegToken> firstUnits = addressContext.getFirstUnits();
+        List<SegToken> secondUnits = addressContext.getSecondUnits();
     }
 }

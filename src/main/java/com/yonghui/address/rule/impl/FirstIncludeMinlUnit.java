@@ -4,6 +4,7 @@ import com.yonghui.address.AddressContext;
 import com.yonghui.address.dto.DetailAddress;
 import com.yonghui.address.enums.AddressUnit;
 import com.yonghui.address.rule.Rule;
+import com.yonghui.jieba.SegToken;
 import org.apache.commons.collections.SortedBag;
 import org.apache.commons.collections.bag.TreeBag;
 import org.springframework.core.Ordered;
@@ -29,7 +30,7 @@ public class FirstIncludeMinlUnit implements Rule {
 
     @Override
     public Boolean condition(AddressContext addressContext) {
-        List<String> firstUnits = addressContext.getFirstUnits();
+        List<SegToken> firstUnits = addressContext.getFirstUnits();
         if(CollectionUtils.isEmpty(firstUnits)) {
             return false;
         }
@@ -37,9 +38,9 @@ public class FirstIncludeMinlUnit implements Rule {
         List<String> baseUnits = AddressUnit.getBaseUnitCollection();
 
         SortedBag unitCount = new TreeBag();
-        for (String firstUnit : firstUnits) {
-            Optional<String> unit = baseUnits.stream().filter(firstUnit::endsWith).findAny();
-            if(unit.isPresent() && firstUnit.length() > 1) {
+        for (SegToken firstToken : firstUnits) {
+            Optional<String> unit = baseUnits.stream().filter(baseUnit -> firstToken.getWord().endsWith(baseUnit)).findAny();
+            if(unit.isPresent() && firstToken.getWord().length() > 1) {
                 unitCount.add(unit.get());
             }
         }

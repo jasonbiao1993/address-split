@@ -51,18 +51,18 @@ public class FirstContainPrefixUnit implements Rule {
         List<AddressUnit> prefixUnitEnum = AddressUnit.getPrefixUnitEnum();
 
         Integer firstMinLevel = Integer.MAX_VALUE;
-        for (String firstUnit : firstUnits) {
-            Optional<AddressUnit> addressUnit = prefixUnitEnum.stream().filter(prefixUnit -> firstUnit.endsWith(prefixUnit.getUnit())).findAny();
-            if(addressUnit.isPresent() && firstUnit.length() > 1) {
+        for (SegToken firstToken : firstUnits) {
+            Optional<AddressUnit> addressUnit = prefixUnitEnum.stream().filter(prefixUnit -> firstToken.getWord().endsWith(prefixUnit.getUnit())).findAny();
+            if(addressUnit.isPresent() && firstToken.getWord().length() > 1) {
                 firstMinLevel = Math.min(firstMinLevel, addressUnit.get().getLevel());
             }
         }
 
 
         Integer secondMinLevel = Integer.MAX_VALUE;
-        for (String secondUnit : secondUnits) {
-            Optional<AddressUnit> addressUnit = prefixUnitEnum.stream().filter(prefixUnit -> secondUnit.endsWith(prefixUnit.getUnit())).findAny();
-            if(addressUnit.isPresent() && secondUnit.length() > 1) {
+        for (SegToken secondToken : secondUnits) {
+            Optional<AddressUnit> addressUnit = prefixUnitEnum.stream().filter(prefixUnit -> secondToken.getWord().endsWith(prefixUnit.getUnit())).findAny();
+            if(addressUnit.isPresent() && secondToken.getWord().length() > 1) {
                 secondMinLevel = Math.min(firstMinLevel, addressUnit.get().getLevel());
             }
         }
@@ -74,7 +74,7 @@ public class FirstContainPrefixUnit implements Rule {
         }
         detailAddress.setFirstAddress(addressContext.getFirstAddress());
 
-        String minUnit = secondUnits.get(secondUnits.size() - 1);
+        String minUnit = secondUnits.get(secondUnits.size() - 1).getWord();
         String secondAddress = addressContext.getSecondAddress();
         detailAddress.setSecondAddress(secondAddress.substring(0, secondAddress.indexOf(minUnit)) + minUnit);
         return detailAddress;

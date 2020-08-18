@@ -89,9 +89,9 @@ public class AddressSplitImpl implements AddressSplit , BeanPostProcessor {
      * @return
      */
     @Override
-    public List<String> extract(List<SegToken> segTokens) {
+    public List<SegToken> extract(List<SegToken> segTokens) {
         List<String> filterUnit = AddressUnit.getAllUnit();
-        return segTokens.stream().filter(segToken -> filterUnit.stream().anyMatch(segToken.word::endsWith)).map(SegToken::getWord).collect(Collectors.toList());
+        return segTokens.stream().filter(segToken -> filterUnit.stream().anyMatch(segToken.word::endsWith)).collect(Collectors.toList());
     }
 
     @Override
@@ -105,10 +105,8 @@ public class AddressSplitImpl implements AddressSplit , BeanPostProcessor {
 
             addressContext.setFirstAddress(firstSeg.stream().map(SegToken::getWord).collect(Collectors.joining()));
             addressContext.setSecondAddress(secondSeg.stream().map(SegToken::getWord).collect(Collectors.joining()));
-            List<String> firstExtractSeg = extract(firstSeg);
-            List<String> secondExtractSeg = extract(secondSeg);
-            addressContext.setFirstUnits(firstExtractSeg);
-            addressContext.setSecondUnits(secondExtractSeg);
+            addressContext.setFirstUnits(extract(firstSeg));
+            addressContext.setSecondUnits(extract(secondSeg));
 
             // 经过提取单位后的后置处理
             interceptors.stream().filter(interceptor -> interceptor instanceof AfterExtractInterceptor)

@@ -4,6 +4,7 @@ import com.yonghui.address.AddressContext;
 import com.yonghui.address.dto.DetailAddress;
 import com.yonghui.address.enums.AddressUnit;
 import com.yonghui.address.rule.Rule;
+import com.yonghui.jieba.SegToken;
 import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
 
@@ -26,13 +27,13 @@ public class SecondContainPrefixUnit implements Rule {
 
     @Override
     public Boolean condition(AddressContext addressContext) {
-        List<String> secondUnits = addressContext.getSecondUnits();
+        List<SegToken> secondUnits = addressContext.getSecondUnits();
         List<String> prefixUnits = AddressUnit.getPrefixUnit();
 
         Boolean secondPrefixExist = false;
-        for (String secondUnit : secondUnits) {
-            Optional<String> unit = prefixUnits.stream().filter(secondUnit::endsWith).findAny();
-            if(unit.isPresent() && secondUnit.length() > 1) {
+        for (SegToken secondToken : secondUnits) {
+            Optional<String> unit = prefixUnits.stream().filter(prefixUnit -> secondToken.getWord().endsWith(prefixUnit)).findAny();
+            if(unit.isPresent() && secondToken.getWord().length() > 1) {
                 secondPrefixExist = true;
             }
         }
@@ -45,8 +46,8 @@ public class SecondContainPrefixUnit implements Rule {
         DetailAddress detailAddress = new DetailAddress();
         detailAddress.setFirstAddress(addressContext.getFirstAddress());
 
-        List<String> secondUnits = addressContext.getSecondUnits();
-        String minUnit = secondUnits.get(secondUnits.size() - 1);
+        List<SegToken> secondUnits = addressContext.getSecondUnits();
+        String minUnit = secondUnits.get(secondUnits.size() - 1).getWord();
         String secondAddress = addressContext.getSecondAddress();
         detailAddress.setSecondAddress(secondAddress.substring(0, secondAddress.indexOf(minUnit)) + minUnit);
         return detailAddress;
