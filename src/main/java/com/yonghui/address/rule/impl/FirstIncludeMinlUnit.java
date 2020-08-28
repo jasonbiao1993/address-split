@@ -30,7 +30,7 @@ public class FirstIncludeMinlUnit implements Rule {
 
     @Override
     public Boolean condition(AddressContext addressContext) {
-        List<SegToken> firstUnits = addressContext.getFirstUnits();
+        List<SegToken> firstUnits = addressContext.getFirstFilterUnits();
         if(CollectionUtils.isEmpty(firstUnits)) {
             return false;
         }

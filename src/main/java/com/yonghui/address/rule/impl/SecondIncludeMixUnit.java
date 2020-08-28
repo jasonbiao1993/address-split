@@ -10,7 +10,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author jasonbiao
@@ -27,7 +29,7 @@ public class SecondIncludeMixUnit implements Rule {
 
     @Override
     public Boolean condition(AddressContext addressContext) {
-        List<SegToken> secondUnits = addressContext.getSecondUnits();
+        List<SegToken> secondUnits = addressContext.getSecondFilterUnits();
         if(CollectionUtils.isEmpty(secondUnits)) {
             return false;
         }
@@ -48,29 +50,27 @@ public class SecondIncludeMixUnit implements Rule {
     public DetailAddress process(AddressContext addressContext) {
         DetailAddress detailAddress = new DetailAddress();
         detailAddress.setFirstAddress(addressContext.getFirstAddress());
-        List<SegToken> secondUnits = addressContext.getSecondUnits();
+        List<SegToken> secondUnits = addressContext.getSecondFilterUnits();
         List<String> baseSeocondUnits = AddressUnit.getBaseSeocondUnit();
         List<String> minUnits = AddressUnit.getMinUnit();
 
-        String minUnit = null;
-        for (SegToken secondToken : secondUnits) {
-            // 获取最小的栋
-            Optional<String> unit = baseSeocondUnits.stream().filter(baseSecondUnit -> secondToken.getWord().endsWith(baseSecondUnit)).findAny();
-            if(unit.isPresent() && secondToken.getWord().length() > 1) {
-                minUnit = unit.get();
-                break;
-            }
+        SegToken minUnit = null;
 
-            // 栋不存在，获取最小的单元
-            unit = minUnits.stream().filter(u -> secondToken.getWord().endsWith(u)).findAny();
-            if(unit.isPresent() && secondToken.getWord().length() > 1) {
-                minUnit = unit.get();
-                break;
-            }
+        // 获取楼栋
+        List<SegToken> segTokenMinUnits = secondUnits.stream().filter(segToken -> baseSeocondUnits.stream().anyMatch(baseSeocondUnit -> segToken.getWord().endsWith(baseSeocondUnit))).collect(Collectors.toList());
+        if(!CollectionUtils.isEmpty(segTokenMinUnits)) {
+            minUnit = segTokenMinUnits.get(segTokenMinUnits.size() - 1);
         }
 
-        String secondAddress = addressContext.getSecondAddress();
-        detailAddress.setSecondAddress(secondAddress.substring(0, secondAddress.indexOf(minUnit)) + minUnit);
+        // 楼栋不存在，获取单元
+        if(Objects.isNull(minUnit)) {
+            minUnit = secondUnits.stream().filter(segToken -> minUnits.stream().anyMatch(minUnitFilter -> segToken.getWord().endsWith(minUnitFilter))).findAny().orElse(null);
+        }
+
+        if(Objects.nonNull(minUnit)) {
+            String secondAddress = addressContext.getSecondAddress();
+            detailAddress.setSecondAddress(secondAddress.substring(0, minUnit.getStartOffset()) + minUnit.getWord());
+        }
         return detailAddress;
     }
 

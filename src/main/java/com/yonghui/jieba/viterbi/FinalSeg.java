@@ -22,7 +22,7 @@ import java.util.Collections;
 @Slf4j
 public class FinalSeg {
     private static FinalSeg singleInstance;
-    private static final String PROB_EMIT = "/prob_emit.txt";
+    private static final String PROB_EMIT = "/dict/prob_emit.txt";
     private static char[] states = new char[] { 'B', 'M', 'E', 'S' };
     private static Map<Character, Map<Character, Double>> emit;
     private static Map<Character, Double> start;

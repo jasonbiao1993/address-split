@@ -27,7 +27,7 @@ public class SecondContainPrefixUnit implements Rule {
 
     @Override
     public Boolean condition(AddressContext addressContext) {
-        List<SegToken> secondUnits = addressContext.getSecondUnits();
+        List<SegToken> secondUnits = addressContext.getSecondFilterUnits();
         List<String> prefixUnits = AddressUnit.getPrefixUnit();
 
         Boolean secondPrefixExist = false;
@@ -46,7 +46,7 @@ public class SecondContainPrefixUnit implements Rule {
         DetailAddress detailAddress = new DetailAddress();
         detailAddress.setFirstAddress(addressContext.getFirstAddress());
 
-        List<SegToken> secondUnits = addressContext.getSecondUnits();
+        List<SegToken> secondUnits = addressContext.getSecondFilterUnits();
         String minUnit = secondUnits.get(secondUnits.size() - 1).getWord();
         String secondAddress = addressContext.getSecondAddress();
         detailAddress.setSecondAddress(secondAddress.substring(0, secondAddress.indexOf(minUnit)) + minUnit);

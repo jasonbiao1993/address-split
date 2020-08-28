@@ -105,8 +105,8 @@ public class AddressSplitImpl implements AddressSplit , BeanPostProcessor {
 
             addressContext.setFirstAddress(firstSeg.stream().map(SegToken::getWord).collect(Collectors.joining()));
             addressContext.setSecondAddress(secondSeg.stream().map(SegToken::getWord).collect(Collectors.joining()));
-            addressContext.setFirstUnits(extract(firstSeg));
-            addressContext.setSecondUnits(extract(secondSeg));
+            addressContext.setFirstFilterUnits(extract(firstSeg));
+            addressContext.setSecondFilterUnits(extract(secondSeg));
 
             // 经过提取单位后的后置处理
             interceptors.stream().filter(interceptor -> interceptor instanceof AfterExtractInterceptor)

@@ -27,7 +27,7 @@ import java.util.Optional;
 public class FirstContainPrefixUnit implements Rule {
     @Override
     public Boolean condition(AddressContext addressContext) {
-        List<SegToken> firstUnits = addressContext.getFirstUnits();
+        List<SegToken> firstUnits = addressContext.getFirstFilterUnits();
         List<String> prefixUnits = AddressUnit.getPrefixUnit();
 
         Boolean firstPrefixExist = false;
@@ -45,8 +45,8 @@ public class FirstContainPrefixUnit implements Rule {
     public DetailAddress process(AddressContext addressContext) {
         DetailAddress detailAddress = new DetailAddress();
 
-        List<SegToken> firstUnits = addressContext.getFirstUnits();
-        List<SegToken> secondUnits = addressContext.getSecondUnits();
+        List<SegToken> firstUnits = addressContext.getFirstFilterUnits();
+        List<SegToken> secondUnits = addressContext.getSecondFilterUnits();
 
         List<AddressUnit> prefixUnitEnum = AddressUnit.getPrefixUnitEnum();
 

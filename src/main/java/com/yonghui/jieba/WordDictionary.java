@@ -23,7 +23,7 @@ import java.util.Set;
 @Slf4j
 public class WordDictionary {
     private static WordDictionary singleton;
-    private static final String MAIN_DICT = "/dict.txt";
+    private static final String MAIN_DICT = "/dict/dict.txt";
     private static final String USER_DICT_SUFFIX = ".dict";
 
     public final Map<String, Double> freqs = new HashMap<String, Double>();

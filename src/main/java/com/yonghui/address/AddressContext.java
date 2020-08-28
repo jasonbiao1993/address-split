@@ -51,10 +51,10 @@ public class AddressContext {
     /**
      * 提取的一级地址单位集合
      */
-    private List<SegToken> firstUnits;
+    private List<SegToken> firstFilterUnits;
 
     /**
      * 提取的二级地址单位集合
      */
-    private List<SegToken> secondUnits;
+    private List<SegToken> secondFilterUnits;
 }

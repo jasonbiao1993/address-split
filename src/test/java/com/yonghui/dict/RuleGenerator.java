@@ -2,6 +2,7 @@ package com.yonghui.dict;
 
 
 import com.google.common.collect.Lists;
+import com.yonghui.jieba.util.Number2ChineseUtil;
 
 import java.util.List;
 
@@ -49,9 +50,9 @@ public class RuleGenerator {
     );
 
     public static void main(String[] args) {
-//        for (int i = 1; i < 100; i++) {
-//            System.out.println(Number2ChineseUtil.toChinese(i,false) + "区");
-//        }
+        for (int i = 1; i < 100; i++) {
+            System.out.println(i + "街区");
+        }
 
 //        for(String letter : letters) {
 //            System.out.println(letter + "区");
@@ -67,8 +68,8 @@ public class RuleGenerator {
 
 
 //        for (int i = 1; i < 20; i++)
-            for (String jia : jias) {
-                System.out.println(jia  + "区");
-            }
+//            for (String jia : jias) {
+//                System.out.println(jia  + "区");
+//            }
     }
 }
