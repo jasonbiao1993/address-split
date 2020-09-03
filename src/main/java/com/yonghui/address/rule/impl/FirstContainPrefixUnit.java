@@ -74,9 +74,9 @@ public class FirstContainPrefixUnit implements Rule {
         }
         detailAddress.setFirstAddress(addressContext.getFirstAddress());
 
-        String minUnit = secondUnits.get(secondUnits.size() - 1).getWord();
+        SegToken segToken = secondUnits.get(secondUnits.size() - 1);
         String secondAddress = addressContext.getSecondAddress();
-        detailAddress.setSecondAddress(secondAddress.substring(0, secondAddress.indexOf(minUnit)) + minUnit);
+        detailAddress.setSecondAddress(secondAddress.substring(0, segToken.getEndOffset()));
         return detailAddress;
     }
 

@@ -18,7 +18,7 @@ public class AddressUtil {
      * @param secondAddress
      * @return
      */
-    public static String getIntersection(String firstAddress, String secondAddress) {
+    public static String getFirstAddrPrefixAndSecondAddrSuffixIntersection(String firstAddress, String secondAddress) {
         if(StringUtils.isEmpty(firstAddress) || StringUtils.isEmpty(secondAddress)) {
             return null;
         }
@@ -30,5 +30,14 @@ public class AddressUtil {
             }
         }
         return null;
+    }
+
+
+    public static Integer getIndexOfFirstAddrInSecondAddr(String firstAddress, String secondAddress) {
+        if(StringUtils.isEmpty(firstAddress) || StringUtils.isEmpty(secondAddress)) {
+            return -1;
+        }
+
+        return secondAddress.indexOf(firstAddress);
     }
 }

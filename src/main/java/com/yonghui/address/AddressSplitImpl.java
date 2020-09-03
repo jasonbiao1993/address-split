@@ -11,6 +11,7 @@ import com.yonghui.address.rule.interceptor.*;
 import com.yonghui.jieba.JiebaSegmenter;
 import com.yonghui.jieba.SegToken;
 import com.yonghui.jieba.WordDictionary;
+import com.yonghui.util.StringEscapeUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
@@ -78,8 +79,14 @@ public class AddressSplitImpl implements AddressSplit , BeanPostProcessor {
      */
     @Override
     public List<SegToken> split(String sentence) {
+        // 繁体->简体
         sentence = ZhConverterUtil.toSimple(sentence);
+
+        // 去除空串
         sentence = StringUtil.trimAnyBlank(sentence);
+
+        // 去除html 转译
+        sentence = StringEscapeUtils.unescapeHtml4(sentence);
         return jiebaSegmenter.process(sentence, JiebaSegmenter.SegMode.SEARCH);
     }
 

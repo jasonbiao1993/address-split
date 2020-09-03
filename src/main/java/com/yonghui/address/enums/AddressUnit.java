@@ -24,6 +24,7 @@ public enum AddressUnit {
     XIANG("巷", 5),
     JIEQU("街区", 5),
     HAOJIEQU("号街区", 5),
+    HAOFU("号附", 5),
     HAO("号", 4),
     HAOYUAN("号院", 3),
     DONG("栋", 2),

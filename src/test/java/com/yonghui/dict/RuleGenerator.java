@@ -50,8 +50,8 @@ public class RuleGenerator {
     );
 
     public static void main(String[] args) {
-        for (int i = 1; i < 100; i++) {
-            System.out.println(i + "街区");
+        for (int i = 1; i < 1000; i++) {
+            System.out.println(Number2ChineseUtil.toChinese(i,false) + "号附");
         }
 
 //        for(String letter : letters) {

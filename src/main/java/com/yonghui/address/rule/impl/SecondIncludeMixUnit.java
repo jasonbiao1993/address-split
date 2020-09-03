@@ -69,7 +69,7 @@ public class SecondIncludeMixUnit implements Rule {
 
         if(Objects.nonNull(minUnit)) {
             String secondAddress = addressContext.getSecondAddress();
-            detailAddress.setSecondAddress(secondAddress.substring(0, minUnit.getStartOffset()) + minUnit.getWord());
+            detailAddress.setSecondAddress(secondAddress.substring(0, minUnit.getEndOffset()));
         }
         return detailAddress;
     }
