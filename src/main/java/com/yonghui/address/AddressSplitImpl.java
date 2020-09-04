@@ -1,7 +1,6 @@
 package com.yonghui.address;
 
 import com.alibaba.fastjson.JSON;
-import com.github.houbb.heaven.util.lang.StringUtil;
 import com.github.houbb.opencc4j.util.ZhConverterUtil;
 import com.google.common.collect.Lists;
 import com.yonghui.address.enums.AddressUnit;
@@ -12,6 +11,7 @@ import com.yonghui.jieba.JiebaSegmenter;
 import com.yonghui.jieba.SegToken;
 import com.yonghui.jieba.WordDictionary;
 import com.yonghui.util.StringEscapeUtils;
+import com.yonghui.util.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
@@ -83,7 +83,7 @@ public class AddressSplitImpl implements AddressSplit , BeanPostProcessor {
         sentence = ZhConverterUtil.toSimple(sentence);
 
         // 去除空串
-        sentence = StringUtil.trimAnyBlank(sentence);
+        sentence = StringUtil.trimBlank(sentence);
 
         // 去除html 转译
         sentence = StringEscapeUtils.unescapeHtml4(sentence);
